@@ -1,0 +1,82 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Jugadores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black; 
+            color: white; 
+        }
+        .container {
+            margin-top: 0; 
+        }
+       
+        .logo-header {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .logo-header img {
+            max-width: 150px; 
+            height: auto;
+        }
+        .btn-naranja {
+        background-color: orange;
+        border-color: orange;
+        color: white;
+    }
+
+    .btn-naranja:hover {
+        background-color: darkorange; /* Color más oscuro al hacer hover */
+        border-color: darkorange;
+    }
+    .lista-pdfs-naranja .list-group-item {
+        background-color: transparent; /* Si quieres un fondo diferente, ajusta esto */
+        color: orange;
+    }
+
+    /* Cambia el color de los enlaces a PDF en naranja */
+    .enlace-pdf-naranja {
+        color: orange;
+        font-weight: bold;
+    }
+
+    /* Efecto hover para los enlaces a PDF */
+    .enlace-pdf-naranja:hover {
+        color: darkorange;
+    }
+    .btn-negro {
+        background-color: black;
+        color: white;
+        border: none;
+    }
+    .text-orange {
+    color: #ff9800; /* Color naranja */
+}
+    </style>
+</head>
+{% load static %}
+<body>
+    {% if messages %}
+            <div class="alert alert-success" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="container mt-4">
+        <!-- Logo de la empresa -->
+        <div class="logo-header">
+            <img src="{% static 'phpsportlogo.png' %}" alt="Logo Empresa">
+        </div>
+        
+        <h1 class="mb-4 text-center">Gestión de Jugadores</h1> 
+        {% block contenido %}
+        {% endblock %}
+    </div>
+</body>
+</html>

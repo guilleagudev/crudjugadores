@@ -1,0 +1,16 @@
+<!-- jugadores/templates/jugadores/eliminar_jugador.html -->
+
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+    <div class="container">
+        <h2>Eliminar Jugador: {{ jugador.nombre }}</h2>
+        <p>¿Estás seguro de que deseas eliminar a este jugador? Esta acción también eliminará todas sus carpetas y PDFs asociados.</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar Jugador</button>
+            <a href="{% url 'jugadores:detalle_jugador' jugador.id %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}

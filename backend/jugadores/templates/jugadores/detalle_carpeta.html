@@ -1,0 +1,31 @@
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+    <h2>Carpeta: {{ carpeta.nombre }}</h2>
+    
+    <!-- Botón personalizado para Subir Nuevo PDF -->
+    <a href="{% url 'jugadores:subir_pdf' carpeta.id %}" class="btn btn-primary mb-3 btn-naranja">Subir Nuevo PDF</a>
+
+    <h3>Archivos PDF:</h3>
+    <ul class="list-group lista-pdfs-naranja"> <!-- Mantén las clases personalizadas originales -->
+        {% for pdf in carpeta.pdfs.all %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <a href="{{ pdf.archivo.url }}" target="_blank" class="enlace-pdf-naranja">{{ pdf.archivo.name }}</a>
+                    {% if pdf.descripcion %}
+                        - {{ pdf.descripcion }}
+                    {% endif %}
+                </span>
+                <!-- Botón para eliminar PDF en color naranja -->
+                <form action="{% url 'jugadores:eliminar_pdf' pdf.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-naranja">Eliminar</button>
+                </form>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No hay PDFs en esta carpeta.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'jugadores:detalle_jugador' carpeta.jugador.id %}" class="btn btn-secondary mt-3">Volver al Jugador</a>
+{% endblock %}

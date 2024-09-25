@@ -1,0 +1,122 @@
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+
+<!-- Enlace para cerrar sesión -->
+<a href="{% url 'jugadores:logout' %}" class="btn btn-danger mb-3">Cerrar Sesión</a>
+
+<!-- Contenedor con Flexbox para la tabla y la búsqueda -->
+<div class="d-flex justify-content-between align-items-start">
+    
+    <!-- Tabla de Jugadores -->
+    <div class="table-responsive flex-grow-1">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-orange">Nombre</th>
+                    <th class="text-orange">Equipo</th>
+                    <th class="text-orange">Categoría</th>
+                    <th class="text-orange">Año</th>
+                    <th class="text-orange">Posición</th>
+                    <th class="text-orange">País</th>
+                    <th class="text-orange">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jugador in jugadores %}
+                    <tr>
+                        <td class="bg-soft-orange">
+                            <!-- Enlace al detalle del jugador -->
+                            <a href="{% url 'jugadores:detalle_jugador' jugador.id %}" class="text-black text-decoration-none">
+                                <strong>{{ jugador.nombre }}</strong> <!-- Texto en negrita -->
+                            </a>
+                        </td>
+                        <td class="bg-soft-orange">{{ jugador.equipo }}</td>
+                        <td class="bg-soft-orange">{{ jugador.categoria }}</td>
+                        <td class="bg-soft-orange">{{ jugador.ano|date:"Y" }}</td>
+                        <td class="bg-soft-orange">{{ jugador.posicion }}</td>
+                        <td class="bg-soft-orange">{{ jugador.pais }}</td>
+                        <td>
+                            <a href="{% url 'jugadores:editar_jugador' jugador.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'jugadores:eliminar_jugador' jugador.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-orange">No hay jugadores registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulario de Búsqueda -->
+    <div class="ml-4" style="min-width: 250px;">
+        <form method="GET" action="">
+            <div class="form-group">
+                {{ form.nombre.label_tag }} <!-- Nombre -->
+                {{ form.nombre }}
+            </div>
+            <div class="form-group">
+                {{ form.equipo.label_tag }} <!-- Equipo -->
+                {{ form.equipo }}
+            </div>
+            <div class="form-group">
+                {{ form.categoria.label_tag }} <!-- Categoría -->
+                {{ form.categoria }}
+            </div>
+            <div class="form-group">
+                {{ form.ano.label_tag }} <!-- Año -->
+                {{ form.ano }}
+            </div>
+            <div class="form-group">
+                {{ form.posicion.label_tag }} <!-- Posición -->
+                {{ form.posicion }}
+            </div>
+            <div class="form-group">
+                {{ form.pais.label_tag }} <!-- País -->
+                {{ form.pais }}
+            </div>
+            <button type="submit" class="btn btn-warning btn-block">Buscar</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- Botón Agregar Nuevo Jugador -->
+<a href="{% url 'jugadores:crear_jugador' %}" class="btn btn-warning mt-3">Agregar Nuevo Jugador</a>
+
+<style>
+    .bg-soft-orange {
+        background-color: #ffcc80; /* Color naranja suave */
+        color: black; /* Texto en negro para mejor contraste */
+    }
+
+    .bg-soft-orange a {
+        color: black; /* Color del enlace en negro */
+        text-decoration: none; /* Quita el subrayado del enlace */
+        display: block; /* Hace que el enlace ocupe toda la celda */
+        height: 100%; /* Asegura que el enlace ocupe toda la altura de la celda */
+        width: 100%; /* Asegura que el enlace ocupe toda la anchura de la celda */
+    }
+
+    .bg-soft-orange a:visited {
+        color: black; /* Mantiene el color negro para enlaces visitados */
+    }
+
+    .text-orange {
+        color: #ff9800; /* Color naranja para el texto */
+    }
+
+    /* Ajuste para el contenedor de la búsqueda y tabla */
+    .d-flex {
+        gap: 20px;
+    }
+
+    .form-group label {
+        display: block; /* Mostrar el label encima del input */
+        font-weight: bold;
+    }
+</style>
+
+{% endblock %}
