@@ -1,0 +1,13 @@
+<!-- jugadores/templates/jugadores/crear_subcarpeta.html -->
+
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+    <h2>Agregar Nueva Subcarpeta en "{{ carpeta_padre.nombre }}"</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+    <a href="{% url 'jugadores:detalle_carpeta' carpeta_padre.id %}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

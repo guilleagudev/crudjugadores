@@ -1,0 +1,110 @@
+{% extends 'jugadores/base.html' %}
+{% load static %}
+
+{% block contenido %}
+    <div class="container mt-4">
+        <h2 class="text-center" style="color: #FFA500;">Detalles de: {{ jugador.nombre }}</h2>
+
+        <!-- Imagen de perfil en la parte superior derecha -->
+        <div class="text-right mb-3">
+            {% if jugador.img1 %}
+                <img src="{{ jugador.img1.url }}" alt="{{ jugador.nombre }} - Perfil" class="img-fluid" style="max-width: 200px; height: 250px;" onerror="this.onerror=null; this.src='{% static 'img/default_profile.png' %}'">
+            {% else %}
+                <img src="{% static 'img/default_profile.png' %}" alt="{{ jugador.nombre }} - Perfil" class="img-fluid" style="max-width: 200px; height: 250px;">
+            {% endif %}
+        </div>
+
+        <!-- Información General en Texto Naranja sobre Fondo Negro -->
+        <!-- Añadir margin-bottom para subir los datos -->
+        <div class="row mt-3 mb-4" style="background-color: black;">
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Nombre</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.nombre }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Equipo</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.equipo }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-4" style="background-color: black;">
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Categoría</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.categoria }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Año</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.ano|date:"Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Posición</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.posicion }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-4" style="background-color: black;">
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">País</h5>
+                        <p class="card-text font-weight-bold">{{ jugador.pais }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para Agregar Carpeta -->
+        <a href="{% url 'jugadores:crear_carpeta' jugador.id %}" class="btn btn-success mb-3">
+            Agregar Nueva Carpeta
+        </a>
+
+        <!-- Sección de Carpetas Asociadas -->
+        <h3 class="mt-4" style="color: #FFA500;">Carpetas Asociadas</h3>
+        {% if carpetas %}
+            <div class="row">
+                {% for carpeta in carpetas %}
+                    <div class="col-md-4">
+                        <div class="card mb-3" style="background-color: black; color: #FFA500; border: none;">
+                            <div class="card-body">
+                                <a href="{% url 'jugadores:detalle_carpeta' carpeta.id %}" class="btn btn-negro mb-2">
+                                    <h5 class="card-title font-weight-bold">{{ carpeta.nombre }}</h5>
+                                </a>
+
+                                <!-- Botón para Eliminar Carpeta -->
+                                <form method="POST" action="{% url 'jugadores:eliminar_carpeta' carpeta.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta carpeta?')">Eliminar Carpeta</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: #FFA500;">No hay carpetas para este jugador.</p>
+        {% endif %}
+
+        <!-- Botón para Volver al Listado de Jugadores -->
+        <a href="{% url 'jugadores:lista_jugadores' %}" class="btn btn-secondary mt-3">Volver al Listado</a>
+    </div>
+{% endblock %}

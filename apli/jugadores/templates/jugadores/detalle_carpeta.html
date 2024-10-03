@@ -1,0 +1,56 @@
+<!-- jugadores/templates/jugadores/detalle_carpeta.html -->
+
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+    <h2>Carpeta: {{ carpeta.nombre }}</h2>
+    
+    <!-- Botón para crear subcarpeta -->
+    <a href="{% url 'jugadores:crear_subcarpeta' carpeta.id %}" class="btn btn-primary mb-3 btn-naranja">Agregar Nueva Subcarpeta</a>
+    
+    <!-- Botón para subir un PDF -->
+    <a href="{% url 'jugadores:subir_pdf' carpeta.id %}" class="btn btn-success mb-3">Subir PDF</a>
+
+    <!-- Sección de subcarpetas -->
+    <h3>Subcarpetas:</h3>
+    <ul class="list-group" style="color: black">
+        {% if carpeta.subcarpetas.exists %}
+            {% for subcarpeta in carpeta.subcarpetas.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="color : black">
+                    <span>
+                        <a href="{% url 'jugadores:detalle_carpeta' subcarpeta.id %}" style="color: black;">{{ subcarpeta.nombre }}</a>
+                    </span>
+                    <form action="{% url 'jugadores:eliminar_subcarpeta' subcarpeta.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta subcarpeta?')">Eliminar</button>
+                    </form>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="list-group-item">No hay subcarpetas en esta carpeta.</li>
+        {% endif %}
+    </ul>
+
+    <!-- Resto de tu contenido para PDFs -->
+    <h3>Archivos PDF:</h3>
+    <ul class="list-group lista-pdfs-naranja">
+        {% for pdf in carpeta.pdfs.all %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <a href="{{ pdf.archivo.url }}" target="_blank" class="enlace-pdf-naranja">{{ pdf.archivo.name }}</a>
+                    {% if pdf.descripcion %}
+                        - {{ pdf.descripcion }}
+                    {% endif %}
+                </span>
+                <form action="{% url 'jugadores:eliminar_pdf' pdf.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No hay PDFs en esta carpeta.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'jugadores:detalle_jugador' carpeta.jugador.id %}" class="btn btn-secondary mt-3">Volver al Jugador</a>
+{% endblock %}

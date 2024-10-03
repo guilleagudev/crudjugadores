@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Jugadores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- Añadir la fuente Poppins desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilo global */
+        body {
+            background-color: black; 
+            color: white;
+            font-family: 'Poppins', sans-serif; /* Usando la fuente Poppins */
+        }
+        
+        .container {
+            margin-top: 0; 
+        }
+       
+        .logo-header {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .logo-header img {
+            max-width: 150px; 
+            height: auto;
+        }
+
+        /* Botones en naranja */
+        .btn-naranja {
+            background-color: orange;
+            border-color: orange;
+            color: white;
+        }
+
+        .btn-naranja:hover {
+            background-color: darkorange; /* Color más oscuro al hacer hover */
+            border-color: darkorange;
+        }
+
+        /* Listado de PDFs con color naranja */
+        .lista-pdfs-naranja .list-group-item {
+            background-color: transparent; /* Si quieres un fondo diferente, ajusta esto */
+            color: orange;
+        }
+
+        /* Cambia el color de los enlaces a PDF en naranja */
+        .enlace-pdf-naranja {
+            color: orange;
+            font-weight: bold;
+        }
+
+        /* Efecto hover para los enlaces a PDF */
+        .enlace-pdf-naranja:hover {
+            color: darkorange;
+        }
+
+        /* Botón negro */
+        .btn-negro {
+            background-color: black;
+            color: white;
+            border: none;
+        }
+        .subcarpeta-enlace {
+    color: #000; /* Texto negro */
+    background-color: #FFA500; /* Fondo naranja */
+    padding: 5px; /* Espaciado interno */
+    border-radius: 3px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+}
+
+    .subcarpeta-enlace:hover {
+    background-color: #333; /* Color de fondo al pasar el ratón */
+}
+
+    
+
+        /* Texto en color naranja */
+        .text-orange {
+            color: #ff9800; /* Color naranja */
+        }
+     
+    </style>
+</head>
+
+{% load static %}
+
+<body>
+    <!-- Mensajes de éxito (si existen) -->
+    {% if messages %}
+        <div class="alert alert-success" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container mt-4">
+        <!-- Logo de la empresa -->
+        <div class="logo-header">
+            <img src="{% static 'phpsportlogo.png' %}" alt="Logo Empresa">
+        </div>
+        
+        <!-- Título principal -->
+        <h1 class="mb-4 text-center">Gestión de Jugadores</h1> 
+
+        <!-- Contenido de las vistas -->
+        {% block contenido %}
+        {% endblock %}
+    </div>
+</body>
+</html>

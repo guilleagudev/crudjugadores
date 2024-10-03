@@ -1,0 +1,24 @@
+<!-- jugadores/templates/jugadores/editar_jugador.html -->
+
+{% extends 'jugadores/base.html' %}
+
+{% block contenido %}
+    <h2 class="text-center">Editar Jugador: {{ jugador.nombre }}</h2>
+    <form method="POST" enctype="multipart/form-data" class="text-center">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3"> <!-- Centra el formulario -->
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="post" enctype="multipart/form-data" class="text-center mt-3">
+        {% csrf_token %}
+        <input type="file" name="perfil_pdf" accept=".pdf" required>
+        <button type="submit" class="btn btn-primary">Subir Perfil del Jugador</button>
+    </form>
+    <a href="{% url 'jugadores:lista_jugadores' %}" class="btn btn-secondary mt-3">Cancelar</a>
+{% endblock %}
