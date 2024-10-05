@@ -13,7 +13,15 @@
                 <img src="{% static 'img/default_profile.png' %}" alt="{{ jugador.nombre }} - Perfil" class="img-fluid" style="max-width: 200px; height: 250px;">
             {% endif %}
         </div>
-
+        {% if jugador.perfil_pdf %}
+    <p class="text-center" style="color: #FFA500;">
+        <a href="{{ jugador.perfil_pdf.url }}" target="_blank" style="color: #FFA500; text-decoration: none;">
+            Ver Perfil del Jugador en PDF
+        </a>
+    </p>
+{% else %}
+    <p class="text-center" style="color: #FFA500;">No hay perfil PDF disponible para este jugador.</p>
+{% endif %}
         <!-- Información General en Texto Naranja sobre Fondo Negro -->
         <!-- Añadir margin-bottom para subir los datos -->
         <div class="row mt-3 mb-4" style="background-color: black;">

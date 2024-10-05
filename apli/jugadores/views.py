@@ -192,24 +192,7 @@ def eliminar_jugador(request, jugador_id):
         return redirect('jugadores:lista_jugadores')
 
     return render(request, 'jugadores/eliminar_jugador.html', {'jugador': jugador})
-@login_required
-def editar_jugador(request, jugador_id):
-    jugador = get_object_or_404(Jugador, id=jugador_id)
-    
-    if request.method == 'POST':
-        form = JugadorForm(request.POST, instance=jugador)
-        if form.is_valid():
-            form.save()
-            return redirect('jugadores:detalle_jugador', jugador_id=jugador.id)
-    else:
-        form = JugadorForm(instance=jugador)
-    
-    context = {
-        'form': form,
-        'jugador': jugador
-    }
-    
-    return render(request, 'jugadores/editar_jugador.html', context)
+
 @login_required
 def eliminar_subcarpeta(request, subcarpeta_id):
     subcarpeta = get_object_or_404(Carpeta, id=subcarpeta_id)

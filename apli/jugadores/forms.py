@@ -10,7 +10,7 @@ class CustomLoginForm(AuthenticationForm):
 class JugadorForm(forms.ModelForm):
     class Meta:
         model = Jugador
-        fields = ['nombre','equipo', 'categoria', 'ano', 'posicion', 'trayectoria', 'pais', 'seleccion', 'img1' ]
+        fields = ['nombre','equipo', 'categoria', 'ano', 'posicion', 'trayectoria', 'pais', 'seleccion', 'img1', 'perfil_pdf' ]
 
 class CarpetaForm(forms.ModelForm):
     class Meta:
